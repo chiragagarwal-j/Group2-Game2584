@@ -18,5 +18,4 @@ Team Participants:
 Description
 ------------
 
-Use Buttons to move the tiles. If two tiles are successive items in Fibonacci Sequence, when they touch, they merge into one!
-Join the numbers and get to the 2584 tile to win the game!
+Utilize the buttons to shift the tiles. Whenever two tiles represent consecutive numbers in the Fibonacci Sequence, they will combine upon contact to form a single tile. Combine the numbers strategically to reach the coveted 2584 tile and achieve victory in the game!
