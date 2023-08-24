@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>2048 Game</title>
+	<!--	<link rel="stylesheet" href="/game2584/static/styles.css" />-->
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f8f8f8;
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+		}
+
+		.board {
+			display: grid;
+			grid-template-columns: repeat(4, 100px);
+			grid-gap: 10px;
+			background-color: #bbada0;
+			border-radius: 10px;
+			padding: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.tile {
+			width: 100px;
+			height: 100px;
+			background-color: #cdc1b4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 24px;
+			font-weight: bold;
+			border-radius: 5px;
+		}
+
+		.controls {
+			margin-top: 20px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		button {
+			margin: 5px;
+			padding: 10px 20px;
+			font-size: 16px;
+			background-color: #4caf50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s, transform 0.2s;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		button:active {
+			transform: scale(0.95);
+		}
+
+
+		.s2 {
+			font-size: 18px;
+		}
+	</style>
+</head>
+
+<body>
+	<p><span class="s2">Score: <span th:text="${score}"></span></span></p>
+	<form action="" method="post">
+		<button type="submit" id="reset" name="reset" value="reset">Reset</button>
+	</form>
+	<div class="board">
+		<div class="tile">
+			<p><span th:text="${tile1}">1</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile2}">2</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile3}">3</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile4}">4</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile5}">5</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile6}">6</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile7}">7</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile8}">8</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile9}">9</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile10}">10</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile11}">11</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile12}">12</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile13}">13</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile14}">14</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile15}">15</span></p>
+		</div>
+
+		<div class="tile">
+			<p><span th:text="${tile16}">16</span></p>
+		</div>
+	</div>
+	<div class="controls">
+		<form action="" method="post">
+			<button type="submit" id="up" name="direction" value="up">up</button>
+			<button type="submit" id="down" name="direction" value="down">down</button>
+			<button type="submit" id="left" name="direction" value="left">left</button>
+			<button type="submit" id="right" name="direction" value="right">right</button>
+		</form>
+	</div>
+</body>
+
+</html>
