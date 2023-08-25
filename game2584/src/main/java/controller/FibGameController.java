@@ -33,6 +33,7 @@ public class FibGameController {
 				index++;
 			}
 		}
+		ctx.setVariable("board", model.toSingleArray());
 		ctx.setVariable("score", model.getScore());
 		templateEngine.process("play2584", ctx, out);
 	}
@@ -40,29 +41,29 @@ public class FibGameController {
 	public void processPost(IWebExchange webExchange, TemplateEngine templateEngine, HttpServletResponse res)
 			throws ServletException, IOException {
 		var request = webExchange.getRequest();
-		String key = request.getParameterValue("direction");
+		String key = request.getParameterValue("control");
 		switch (key) {
-		case "up":
+		case "U":
 			model.up();
 			model.spawn();
 			break;
-		case "down":
+		case "D":
 			model.down();
 			model.spawn();
 			break;
-		case "left":
+		case "L":
 			model.left();
 			model.spawn();
 			break;
-		case "right":
+		case "R":
 			model.right();
 			model.spawn();
 			break;
+		case "RS":
+			model=new Game2584();
+			break;
 		}
-//		String reset = request.getParameterValue("reset");
-//		if(reset.equals("reset")) {
-//			model=new Game2584();
-//		}
+
 
 		res.sendRedirect(request.getRequestPath());
 	}

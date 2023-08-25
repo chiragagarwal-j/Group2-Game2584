@@ -25,12 +25,12 @@ public class Game2584 {
 	public Tile[][] getBoard() {
 		return board;
 	}
-	
-	public int[][] getIntBoard(){
-		int [][] intBoard=new int[4][4];
+
+	public int[][] getIntBoard() {
+		int[][] intBoard = new int[4][4];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
-				intBoard[i][j]=board[i][j].getValue();
+				intBoard[i][j] = board[i][j].getValue();
 			}
 		}
 		return intBoard;
@@ -72,6 +72,7 @@ public class Game2584 {
 		}
 		System.out.println("Score: " + score);
 	}
+
 	@Override
 	public String toString() {
 		String s = "";
@@ -82,6 +83,23 @@ public class Game2584 {
 			s += "\n";
 		}
 		return s;
+	}
+
+	public String[] toSingleArray() {
+		String[] arr = new String[16];
+		int index = 0;
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				int val = board[i][j].getValue();
+				if (val == 0) {
+					arr[index] = "";
+				} else {
+					arr[index] = String.valueOf(val);
+				}
+				index++;
+			}
+		}
+		return arr;
 	}
 
 	public void spawn() {
@@ -242,8 +260,12 @@ public class Game2584 {
 	 * @param col       column that the compare tile is currently on
 	 * @param direction direction (up or down) that the tile is moving in
 	 */
+
 	private void verticalMove(int row, int col, String direction) {
-		Tile initial = board[border][col];
+
+		System.out.println("vertcal: " + border + direction);
+
+		Tile initial = board[this.border][col];
 		Tile compare = board[row][col];
 		if (initial.getValue() == 0
 				|| (nextFib(initial.getValue()) == compare.getValue()
@@ -251,7 +273,8 @@ public class Game2584 {
 				|| ((initial.getValue() == 1 && compare.getValue() == 1)
 						|| (initial.getValue() == 1 && compare.getValue() == 2)
 						|| (initial.getValue() == 2 && compare.getValue() == 1))) {
-			if (row > border || (direction.equals("down") && (row < border))) {
+			if (row > this.border || (direction.equals("down") && (row < this.border))
+					|| (direction.equals("up") && (row > this.border))) {
 				int addScore = initial.getValue() + compare.getValue();
 				if (initial.getValue() != 0) {
 					score += addScore;
@@ -263,11 +286,21 @@ public class Game2584 {
 			}
 		} else {
 			if (direction.equals("down")) {
-				border--;
-			} else {
-				border++;
+
+				if (border <= 3 && border >= 1) {
+					border = border - 1;
+					horizontalMove(row, col, direction);
+				}
+
 			}
-			verticalMove(row, col, direction);
+			if (direction.equals("up")) {
+
+				if (border <= 2 && border >= 0) {
+					border = border + 1;
+					horizontalMove(row, col, direction);
+				}
+
+			}
 		}
 	}
 
@@ -323,7 +356,8 @@ public class Game2584 {
 	 * @param direction direction (left or right) that the tile is moving in
 	 */
 	private void horizontalMove(int row, int col, String direction) {
-		Tile initial = board[row][border];
+		System.out.println("horizontal: " + border + direction);
+		Tile initial = board[row][this.border];
 		Tile compare = board[row][col];
 		if (initial.getValue() == 0
 				|| (nextFib(initial.getValue()) == compare.getValue()
@@ -331,7 +365,8 @@ public class Game2584 {
 				|| ((initial.getValue() == 1 && compare.getValue() == 1)
 						|| (initial.getValue() == 1 && compare.getValue() == 2)
 						|| (initial.getValue() == 2 && compare.getValue() == 1))) {
-			if (col > border || (direction.equals("right") && (col < border))) {
+			if (col > this.border || (direction.equals("right") && (col < this.border))
+					|| (direction.equals("left") && (col > this.border))) {
 				int addScore = initial.getValue() + compare.getValue();
 				if (initial.getValue() != 0) {
 					score += addScore;
@@ -345,11 +380,22 @@ public class Game2584 {
 			}
 		} else {
 			if (direction.equals("right")) {
-				border--;
-			} else {
-				border++;
+
+				if (border <= 3 && border >= 1) {
+					border = border - 1;
+					horizontalMove(row, col, direction);
+				}
+
 			}
-			horizontalMove(row, col, direction);
+			if (direction.equals("left")) {
+
+				if (border <= 2 && border >= 0) {
+					border = border + 1;
+					horizontalMove(row, col, direction);
+				}
+
+			}
+
 		}
 
 	}

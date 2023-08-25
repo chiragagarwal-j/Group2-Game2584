@@ -5,11 +5,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>2048 Game</title>
-	<!--	<link rel="stylesheet" href="/game2584/static/styles.css" />-->
 	<style>
 		body {
 			font-family: Arial, sans-serif;
-			background-color: #f8f8f8;
+			background-color: lightgrey;
 			margin: 0;
 			display: flex;
 			justify-content: center;
@@ -39,118 +38,168 @@
 			border-radius: 5px;
 		}
 
-		.controls {
-			margin-top: 20px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+		.container {
+			text-align: center;
+			margin-top: 50px;
 		}
 
-		button {
+		.direction-btn {
+			font-size: 24px;
+			width: 50px;
+			height: 50px;
 			margin: 5px;
-			padding: 10px 20px;
-			font-size: 16px;
-			background-color: #4caf50;
-			color: white;
 			border: none;
-			border-radius: 5px;
+			border-radius: 50%;
 			cursor: pointer;
-			transition: background-color 0.3s, transform 0.2s;
 		}
 
-		button:hover {
-			background-color: #45a049;
+		.up {
+			background-color: black;
+			color: yellow;
 		}
 
-		button:active {
-			transform: scale(0.95);
+		.left {
+			background-color: black;
+			color: skyblue;
 		}
 
+		.reset {
+			background-color: black;
+			color: white;
+		}
 
-		.s2 {
+		.right {
+			background-color: black;
+			color: red;
+		}
+
+		.down {
+			background-color: black;
+			color: greenyellow;
+		}
+
+		.score-box {
+			background-color: #f2f2f2;
+			border-radius: 10px;
+			padding: 10px;
+			margin-top: 20px;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+		}
+
+		.score {
 			font-size: 18px;
+			text-align: center;
+			margin: 0;
 		}
 	</style>
+
 </head>
 
 <body>
-	<p><span class="s2">Score: <span th:text="${score}"></span></span></p>
-	<form action="" method="post">
-		<button type="submit" id="reset" name="reset" value="reset">Reset</button>
-	</form>
+
 	<div class="board">
-		<div class="tile">
-			<p><span th:text="${tile1}">1</span></p>
+
+		<div class="tile" th:each="val : ${board}">
+			<p th:text="${val}"></p>
 		</div>
 
-		<div class="tile">
-			<p><span th:text="${tile2}">2</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile3}">3</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile4}">4</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile5}">5</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile6}">6</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile7}">7</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile8}">8</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile9}">9</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile10}">10</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile11}">11</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile12}">12</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile13}">13</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile14}">14</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile15}">15</span></p>
-		</div>
-
-		<div class="tile">
-			<p><span th:text="${tile16}">16</span></p>
-		</div>
 	</div>
-	<div class="controls">
+
+	<div class="container">
+		<div class="score-box">
+			<p class="score">Score: <span th:text="${score}">0</span></p>
+		</div>
 		<form action="" method="post">
-			<button type="submit" id="up" name="direction" value="up">up</button>
-			<button type="submit" id="down" name="direction" value="down">down</button>
-			<button type="submit" id="left" name="direction" value="left">left</button>
-			<button type="submit" id="right" name="direction" value="right">right</button>
+			<input type="submit" name="control" value="U" class="direction-btn up">
+			<br>
+			<br>
+			<input type="submit" name="control" value="L" class="direction-btn left">
+			<input type="submit" name="control" value="RS" class="direction-btn reset">
+			<input type="submit" name="control" value="R" class="direction-btn right">
+			<br>
+			<br>
+			<input type="submit" name="control" value="D" class="direction-btn down">
 		</form>
+
 	</div>
+	<script>
+		const cellColors = {
+			1: '#eee4da',
+			2: '#ede0c8',
+			3: '#f2b179',
+			5: '#f59563',
+			8: '#f67c5f',
+			13: '#f65e3b',
+			21: '#edcf72',
+			34: '#edcc61',
+			55: '#edc850',
+			89: '#edc53f',
+			144: '#edc22e',
+			233: 'blue',
+			377: 'blue',
+			610: 'blue',
+			987: 'green',
+			1597: 'green',
+			2584: 'green'
+		};
+
+
+
+
+		function updateCellColors() {
+			const cells = document.getElementsByClassName('tile');
+			for (let i = 0; i < cells.length; i++) {
+				let x = parseInt([cells[i].querySelector("p").innerText]);
+				if (x) {
+					cells[i].style.background = cellColors[x];
+				}
+				else {
+					cells[i].style.background = "white";
+				}
+			}
+		}
+
+
+		console.log("hello");
+		updateCellColors();
+
+		document.addEventListener("keydown", function (event) {
+			console.log("hey, i just recognised a key press!");
+			console.log(event);
+			const btnMap = {
+				ArrowUp: "U",
+				ArrowDown: "D",
+				ArrowLeft: "L",
+				ArrowRight: "R"
+			};
+			
+			const pressedButtonValue = btnMap[event.key];
+			if (pressedButtonValue) {
+				event.preventDefault();
+				const buttons = document.querySelectorAll(".control input[type='submit']");
+				console.log(buttons);
+				buttons.forEach(button => {
+					console.out("I am comparing");
+					console.out(button.value);
+					console.out("and");
+					console.out(pressedButtonValue);
+					if (button.value === pressedButtonValue) {
+						button.classList.add("highlight");
+						setTimeout(() => {
+							button.classList.remove("highlight");
+						}, 200);
+						button.click();
+					}
+				});
+			}
+		});
+		/*document.addEventListener("keydown", function(event) {
+			console.log("world");
+		});*/
+
+
+
+	</script>
 </body>
 
 </html>
